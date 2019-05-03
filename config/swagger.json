@@ -1,121 +1,150 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "version": "1.0.0",
-      "title": "Mean Application API",
-      "description": "Mean Application API",
-      "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
-      }
-    },
-    "host": "localhost:4040",
-    "basePath": "/api/",
-    "tags": [
-      {
-        "name": "Users",
-        "description": "API for users in the system"
-      },
-      {
-        "name": "Auth",
-        "description": "API for auth in the system"
-      }
-    ],
-    "schemes": [
-      "http"
-    ],
-    "consumes": [
-      "application/json"
-    ],
-    "produces": [
-      "application/json"
-    ],
-    "securityDefinitions": {
-      "AuthHeader": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "Authorization"
-      }
-    },
-    "paths": {
-      "/auth/login": {
-        "post": {
-          "tags": ["Auth"],
-          "description": "Login to the system",
-        "parameters": [{
-          "name": "auth",
-          "in": "body",
-          "description": "User auth details",
-          "schema": {
-            "type": "object",
-            "required": ["email", "password"],
-            "properties": {
-              "email": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "SlicePay",
+    "description": "Stock Data Repo "
+  },
+  "host": "localhost:3001",
+  "basePath": "/api/",
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/tickerSearch/{symbol}": {
+      "get": {
+        "parameters": [
+          {
+            "name": "auth",
+            "in": "body",
+            "description": "User auth details",
+            "schema": {
+              "type": "object",
+              "required": [
+                "ticker"
+              ],
+              "properties": {
+                "ticker": {
+                  "type": "string"
+                }
               }
             }
           }
-        }],
+        ],
         "produces": [
           "application/json"
         ],
         "responses": {
           "200": {
-            "description": "User is loggedin",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
+            "description": "data found"
           }
         }
-      }
       }
     },
-    "definitions": {
-      "User": {
-        "required": [
-          "email",
-          "fullname"
-        ],
-        "properties": {
-          "_id": {
-            "type": "string",
-            "uniqueItems": true
-          },
-          "email": {
-            "type": "string",
-            "uniqueItems": true
-          },
-          "fullname": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string"
-          },
-          "roles": {
-            "type": "array",
-            "items": {
-              "type": "string"
+    "/api/timeFrame": {
+      "post": {
+        "parameters": [
+          {
+            "name": "auth",
+            "in": "body",
+            "description": "User auth details",
+            "schema": {
+              "type": "object",
+              "required": [
+                "start",
+                "end"
+              ],
+              "properties": {
+                "start": {
+                  "type": "Date"
+                },
+                "end": {
+                  "type": "Date"
+                }
+              }
             }
           }
-        }
-      },
-      "Users": {
-        "type": "array",
-        "$ref": "#/definitions/User"
-      },
-      "Auth": {
-        "type": "object",
-        "properties": [{
-          "token": {
-            "type": "string"
-          },
-          "user": {
-            "$ref": "#/definitions/User"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "data found"
           }
-        }]
+        }
       }
+    },
+    "/api/stocksInTime": {
+      "post": {
+        "parameters": [
+          {
+            "name": "auth",
+            "in": "body",
+            "description": "User auth details",
+            "schema": {
+              "type": "object",
+              "required": [
+                "tickers",
+                "start",
+                "end"
+              ],
+              "properties": {
+                "tickers": {
+                  "type": "array"
+                },
+                "start": {
+                  "type": "Date"
+                },
+                "end": {
+                  "type": "Date"
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "data found"
+          }
+        }
+      }
+    },
+    "/api/companySearch": {
+      "post": {
+        "parameters": [
+          {
+            "name": "auth",
+            "in": "body",
+            "description": "User auth details",
+            "schema": {
+              "type": "object",
+              "required": [
+                "ticker"
+              ],
+              "properties": {
+                "ticker": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "data found"
+          }
+        }
+      }
+    }
   }
 }
